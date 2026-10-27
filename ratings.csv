@@ -1,0 +1,12 @@
+product_id,product_name,rating
+P101,Headphones,5
+P102,Laptop,4
+P101,Headphones,3
+P103,Smartwatch,5
+P102,Laptop,2
+P101,Headphones,4
+P103,Smartwatch,4
+P102,Laptop,5
+P104,Keyboard,2
+P104,Keyboard,3
+P104,Keyboard,4

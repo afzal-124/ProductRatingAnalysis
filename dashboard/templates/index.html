@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Rating Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #172033;
+        }
+        header {
+            background: #142b4a;
+            color: white;
+            padding: 28px 20px;
+            text-align: center;
+        }
+        header p { color: #cbd5e1; }
+        main { max-width: 1050px; margin: 28px auto; padding: 0 18px; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .card, .panel {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px #17203310;
+        }
+        .card span { color: #64748b; font-size: 14px; }
+        .card h2 { margin-bottom: 0; color: #176b52; }
+        .panel { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 14px; border-bottom: 1px solid #e2e8f0; }
+        th { background: #176b52; color: white; }
+        .rating { font-weight: bold; color: #176b52; }
+        .empty { padding: 20px; background: #fff7ed; border-radius: 8px; }
+        footer { text-align: center; padding: 24px; color: #64748b; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Product Rating Analysis</h1>
+        <p>Big Data Analytics using Hadoop MapReduce</p>
+    </header>
+
+    <main>
+        <section class="cards">
+            <div class="card">
+                <span>Products analyzed</span>
+                <h2>{{ products|length }}</h2>
+            </div>
+            <div class="card">
+                <span>Total customer reviews</span>
+                <h2>{{ products|sum(attribute='reviews') }}</h2>
+            </div>
+            <div class="card">
+                <span>Highest average rating</span>
+                <h2>{{ "%.2f"|format(products[0].average) if products else "—" }} / 5</h2>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Product Rating Results</h2>
+            {% if products %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Product</th>
+                        <th>Total Ratings</th>
+                        <th>Reviews</th>
+                        <th>Average Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.total }}</td>
+                        <td>{{ product.reviews }}</td>
+                        <td class="rating">⭐ {{ "%.2f"|format(product.average) }} / 5</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="empty">No Hadoop output found. Run your MapReduce job first.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>Product Rating Analysis | Powered by Hadoop MapReduce</footer>
+</body>
+</html>
